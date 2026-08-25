@@ -78,5 +78,28 @@ Class Contacto{
             return false;
         }
     }
+
+    public function consultarPorParametro($nombre){
+
+        try{
+            $cmdSQL = "select * from ". $this->tablas. " where nombreContacto like :nombreContacto";
+
+            $registro = $this->conexion -> prepare($cmdSQL);
+
+            $nombreParametrizado = "%". $nombre. "%";
+
+            $registro->bindParam(":nombreContacto", $nombreParametrizado);
+
+            $registro->execute();
+
+            return $registro;
+        }
+        
+        catch(Exception $excepcion){
+            
+            error_log("Error durante la consulta". $excepcion->getMessage());
+            return false;
+        }
+    }
 }
 ?>
