@@ -1,5 +1,4 @@
 <?php
-header("Content-Type: application/json");
 Class Contacto{
     
     private $conexion;
@@ -30,17 +29,14 @@ Class Contacto{
         catch(Exception $excepcion){ // catch por si falla durante la consulta
 
             error_log("Error durante la consulta para obtener los contactos". $excepcion->getMessage());
-            
             return false;
         }
-
-        
     }
 
     public function guardarContactos(){ // Metodo para guardar contactos
 
         try{
-            $cmdSQL = "insert into ". $this->tablas. " nombreContacto, telefonoContacto, correoContacto values 
+            $cmdSQL = "insert into ". $this->tablas. " (nombreContacto, telefonoContacto, correoContacto) values 
             (:nombreContacto, :telefonoContacto, :correoContacto)";
 
             $registro = $this->conexion -> prepare($cmdSQL);
@@ -58,7 +54,27 @@ Class Contacto{
         catch(Exception $excepcion){
             
             error_log("Error para guardar contactos". $excepcion->getMessage());
-            
+            return false;
+        }
+    }
+
+    public function eliminarContacto(){
+        
+        try{
+            $cmdSQL = "delete from ". $this->tablas. " where idContacto = :idContacto";
+
+            $registro = $this->conexion -> prepare($cmdSQL);
+
+            $registro->bindParam(":idContacto", $this->idContacto);
+
+            $registro->execute();
+
+            return $registro;
+        }
+
+        catch(Exception $excepcion){
+
+            error_log("Error al eliminar el contacto". $excepcion->getMessage());
             return false;
         }
     }
