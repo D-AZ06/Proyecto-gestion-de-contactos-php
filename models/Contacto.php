@@ -14,6 +14,15 @@ Class Contacto{
         $this->conexion = $db;
     }
 
-    
+    public function obtenerContactos(){ // Metodo para obtener los contactos
+        
+        $cmdSQL = "select * from". $this->tablas; // variable para la consulta sql
+
+        $registro = $this->conexion -> prepare($cmdSQL); //sentencia PDO
+
+        $registro->execute(); // ejecuta la consulta
+
+        return $registro; // retorna los resultados
+    }
 }
 ?>
