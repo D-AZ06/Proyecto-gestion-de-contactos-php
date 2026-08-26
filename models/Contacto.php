@@ -14,6 +14,8 @@ Class Contacto{
         $this->conexion = $db;
     }
 
+    /* -------------------------- METODOS PRINCIPALES ----------------------------------------------------------------------*/
+
     public function obtenerContactos(){ // Metodo para obtener los contactos
         
         try{
@@ -98,6 +100,20 @@ Class Contacto{
         catch(Exception $excepcion){
             
             error_log("Error durante la consulta". $excepcion->getMessage());
+            return false;
+        }
+    }
+
+    /* -------------------------- METODOS DE VALIDACIÓN ----------------------------------------------------------------------*/
+
+    public function validarRegistrosVacios($registro){ // validar que al menos haya información que mostrar
+        
+        $resultado = count($registro); // se cuenta la cantidad de registros que hay 
+
+        if($resultado === 0){ // si no hay retorna false
+            return true;
+        }
+        else{ // si hay retorna true
             return false;
         }
     }
