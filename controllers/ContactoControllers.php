@@ -28,8 +28,19 @@
         
         if($validarParametro==true and $validarParametro2==true){ // se van a consultar por parametros
             
+            $nombreContacto = $contacto->consultarPorParametro($_GET['nombre']);
+            $nombreContacto = $nombreContacto->fetchAll(PDO::FETCH_ASSOC);
+
+            $nombreNoEncontrado = $contacto->validarRegistrosVacios($nombreContacto);
+
+            if($nombreNoEncontrado==false){ 
+                echo json_encode($nombreContacto);
+            }
+            else{ 
+                echo json_encode(["mensaje" => "No se encontraron contactos con ese nombre"]);
+            }
         }
-        
+
         else{ // como no es una consulta parametrizada, se obtienen todos los contactos
             
             $conctactosObtenidos = $contacto->obtenerContactos(); // obtenemos los conctatos con el metodo en el model y la conexión en la bd
@@ -38,10 +49,10 @@
             $registroVacio = $contacto->validarRegistrosVacios($conctactosObtenidos); // validamos que no esté vacio y haya al menos 1 registro
 
             if($registroVacio==false){ // si no hay registros vacios
-                return json_encode($conctactosObtenidos);
+                echo json_encode($conctactosObtenidos);
             }
             else{ // si, si hay registros vacios
-                return json_encode(["mensaje" => "No se encontraron contactos"]);
+                echo json_encode(["mensaje" => "No se encontraron contactos"]);
             }
             
         }
