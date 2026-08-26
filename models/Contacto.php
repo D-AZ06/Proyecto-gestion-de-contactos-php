@@ -14,6 +14,8 @@ Class Contacto{
         $this->conexion = $db;
     }
 
+    /* -------------------------- METODOS PRINCIPALES ----------------------------------------------------------------------*/
+
     public function obtenerContactos(){ // Metodo para obtener los contactos
         
         try{
@@ -33,7 +35,7 @@ Class Contacto{
         }
     }
 
-    public function guardarContactos(){ // Metodo para guardar contactos
+    public function guardarContactos($nombre, $telefono, $correo){ // Metodo para guardar contactos
 
         try{
             $cmdSQL = "insert into ". $this->tablas. " (nombreContacto, telefonoContacto, correoContacto) values 
@@ -42,9 +44,9 @@ Class Contacto{
             $registro = $this->conexion -> prepare($cmdSQL);
 
             // asociamos los parametros de la consulta junto con los del objeto
-            $registro->bindParam(":nombreContacto", $this->nombreContacto);
-            $registro->bindParam(":telefonoContacto", $this->telefonoContacto);
-            $registro->bindParam(":correoContacto", $this->correoContacto);
+            $registro->bindParam(":nombreContacto", $nombre);
+            $registro->bindParam(":telefonoContacto", $telefono);
+            $registro->bindParam(":correoContacto", $correo);
 
             $registro->execute();
 
@@ -58,14 +60,14 @@ Class Contacto{
         }
     }
 
-    public function eliminarContacto(){
+    public function eliminarContacto($id){
         
         try{
             $cmdSQL = "delete from ". $this->tablas. " where idContacto = :idContacto";
 
             $registro = $this->conexion -> prepare($cmdSQL);
 
-            $registro->bindParam(":idContacto", $this->idContacto);
+            $registro->bindParam(":idContacto", $id);
 
             $registro->execute();
 
@@ -99,6 +101,110 @@ Class Contacto{
             
             error_log("Error durante la consulta". $excepcion->getMessage());
             return false;
+        }
+    }
+
+    /* -------------------------- METODOS DE VALIDACIÓN ----------------------------------------------------------------------*/
+
+    public function validarRegistrosVacios($registro){ // validar que al menos haya información que mostrar
+        
+        $resultado = count($registro); // se cuenta la cantidad de registros que hay 
+
+        if($resultado === 0){ // si no hay retorna false
+            return true;
+        }
+        else{ // si hay retorna true
+            return false;
+        }
+    }
+
+    public function validarCamposVacios($nombre, $telefono, $correo){
+
+        if($nombre==null or $telefono==null or $correo==null){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public function validarTelefono($telefono){
+
+        if(strlen($telefono)==10 and $telefono[0]=='3'){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public function validarCorreo($correo){
+
+        if(filter_var($correo, FILTER_VALIDATE_EMAIL)==true){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public function numeroExistente($numero){
+
+        $cmdSQL = "select count(*) as existe from ". $this->tablas. " where telefonoContacto = :telefonoContacto";
+
+        $existeNumero = $this->conexion -> prepare($cmdSQL);
+
+        $existeNumero ->bindParam(":telefonoContacto", $numero);
+
+        $existeNumero->execute();
+
+        $existe =  $existeNumero->fetch(PDO::FETCH_ASSOC);
+
+        if ($existe['existe'] > 0){ // si el número ya está registrado
+            return true;  
+        } 
+        else{ // el número está disponible
+            return false; 
+        }
+    }
+
+    public function correoExistente($correo){
+
+        $cmdSQL = "select count(*) as existe from ". $this->tablas. " where correoContacto = :correoContacto";
+
+        $existeCorreo = $this->conexion -> prepare($cmdSQL);
+
+        $existeCorreo ->bindParam(":correoContacto", $correo);
+
+        $existeCorreo->execute();
+
+        $existe =  $existeCorreo->fetch(PDO::FETCH_ASSOC);
+
+        if ($existe['existe'] > 0){ // si el correo ya está registrado
+            return true;  
+        } 
+        else{ // el correo está disponible
+            return false; 
+        }
+    }
+
+    public function validarId_Existe($id){
+
+        $cmdSQL = "select count(*) as existe from ". $this->tablas. " where idContacto = :idContacto";
+
+        $existeID = $this->conexion -> prepare($cmdSQL);
+
+        $existeID ->bindParam(":idContacto", $id);
+
+        $existeID->execute();
+
+        $existe =  $existeID->fetch(PDO::FETCH_ASSOC);
+
+        if ($existe['existe'] > 0){ // si el id si existe
+            return true;  
+        } 
+        else{ // el id no existe
+            return false; 
         }
     }
 }
