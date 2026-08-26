@@ -60,14 +60,14 @@ Class Contacto{
         }
     }
 
-    public function eliminarContacto(){
+    public function eliminarContacto($id){
         
         try{
             $cmdSQL = "delete from ". $this->tablas. " where idContacto = :idContacto";
 
             $registro = $this->conexion -> prepare($cmdSQL);
 
-            $registro->bindParam(":idContacto", $this->idContacto);
+            $registro->bindParam(":idContacto", $id);
 
             $registro->execute();
 
@@ -150,11 +150,11 @@ Class Contacto{
 
     public function numeroExistente($numero){
 
-        $cmdSQL = "select count(*) as existe from ". $this->tablas. " where numeroContacto = :numeroContacto";
+        $cmdSQL = "select count(*) as existe from ". $this->tablas. " where telefonoContacto = :telefonoContacto";
 
         $existeNumero = $this->conexion -> prepare($cmdSQL);
 
-        $existeNumero ->bindParam(":numeroContacto", $numero);
+        $existeNumero ->bindParam(":telefonoContacto", $numero);
 
         $existeNumero->execute();
 
@@ -184,6 +184,26 @@ Class Contacto{
             return true;  
         } 
         else{ // el correo está disponible
+            return false; 
+        }
+    }
+
+    public function validarId_Existe($id){
+
+        $cmdSQL = "select count(*) as existe from ". $this->tablas. " where idContacto = :idContacto";
+
+        $existeID = $this->conexion -> prepare($cmdSQL);
+
+        $existeID ->bindParam(":idContacto", $id);
+
+        $existeID->execute();
+
+        $existe =  $existeID->fetch(PDO::FETCH_ASSOC);
+
+        if ($existe['existe'] > 0){ // si el id si existe
+            return true;  
+        } 
+        else{ // el id no existe
             return false; 
         }
     }

@@ -116,10 +116,29 @@
             echo json_encode(["mensaje" => "por favor, llene todos los campos correspondientes"]);
         }
     }
-    else if($metodo == "DELETE"){
 
+    else if($metodo == "DELETE"){ // metodo para eliminar registros
+
+        $datosRecibidos = file_get_contents("php://input"); // recibimos el input del https
+        $datosRecibidos = json_decode($datosRecibidos); // lo convertimos a JSON
+
+        $idContacto = $datosRecibidos->idContacto; // extraemos solo el id del contacto
+
+        $validarID = $contacto->validarId_Existe($idContacto);
+
+        if($validarID==true){ // id si existe
+            http_response_code(200);
+            $contactoEliminado = $contacto->eliminarContacto($idContacto);
+            echo json_encode(["mensaje" => "contacto eliminado correctamente"]);
+        }
+        else{
+            http_response_code(400);
+            echo json_encode(["mensaje" => "ha ocurrido un error al eliminar el contacto"]);
+        }
     }
-    else{
 
+    else{ // si ninguna petición es de las que corresponda, muestra
+        http_response_code(400);
+        echo json_encode(["mensaje" => "petición https no conocida"]);
     }
 ?>
