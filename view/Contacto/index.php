@@ -10,7 +10,7 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     </head>
     <body>
-        <script src="" async defer></script>
+        <script src="../main.js" async defer></script>
 
         <header>
             <h1>Gestión de Contactos <i class="bi bi-clipboard-minus"></i> </h1> 
@@ -41,15 +41,17 @@
                     </button>
                 </div>
                 <div>
-                    <thead>
-                        <tr>
-                            <th> <i class="bi bi-person-vcard"></i> Nombre</th>
-                            <th> <i class="bi bi-telephone"></i> Teléfono</th>
-                            <th> <i class="bi bi-envelope"></i> Correo</th>
-                            <th> <i class="bi bi-pencil-square"></i> Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tabla-contactos"></tbody>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th> <i class="bi bi-person-vcard"></i> Nombre</th>
+                                <th> <i class="bi bi-telephone"></i> Teléfono</th>
+                                <th> <i class="bi bi-envelope"></i> Correo</th>
+                                <th> <i class="bi bi-pencil-square"></i> Acciones</th>
+                            </tr>
+                        </thead>    
+                        <tbody id="tablaContactos"></tbody>
+                    </table>
                 </div>
 
             </section>     
