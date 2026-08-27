@@ -19,25 +19,38 @@ fetch('../../controllers/ContactoControllers.php') // obtiene la solicitud del h
 
         tabla.innerHTML = ''; // dejamos la tabla del html limpia antes de iniciar
 
-        if(contactos.length()===0){
-            tabla.innerHTML = `
-                <tr>
-                    <td colspan="4" style="text-align: center;">
-                    No hay contactos registrados
-                    </td>
-                </tr>
-            `;
-        }
-        else {
+        if(Array.isArray(contactos) && contactos.length > 0){
             contactos.forEach(contacto => {
                 tabla.innerHTML += `
                     <tr>
                         <td>${contacto.nombreContacto}</td>
                         <td>${contacto.telefonoContacto}</td>
                         <td>${contacto.correoContacto}</td>
-                        <td><button><i class="bi bi-trash"></i></button></td>
+                        <td class="celdaAccion">
+                            <button class="btnEliminar">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </td>
                     </tr>
                 `;    
             });
         }
+        else {
+            const mensajeTexto = contactos.mensaje || "No hay contactos registrados 📭";
+
+            tabla.innerHTML = `
+                <tr>
+                    <td colspan="4" style="text-align: center;">
+                        ${mensajeTexto}
+                    </td>
+                </tr>
+            `;
+        }
+
+
+        const inputTelefono = document.getElementById('ingresarTelefono');
+
+        inputTelefono.addEventListener('input', (e) => {
+            e.target.value = e.target.value.replace(/[^0-9]/g, '');
+});
 });

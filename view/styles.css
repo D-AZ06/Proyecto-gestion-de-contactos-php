@@ -112,6 +112,20 @@ th{
     background-color: #eeeeee;
 }
 
+.celdaAccion{
+    text-align: center;
+    vertical-align: middle;
+}
+
+.btnEliminar{
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
 .cardAgregar input{
     display: block;
     width: 90%;

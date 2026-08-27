@@ -62,8 +62,14 @@
                     <h2>Agregar Contactos</h2>
 
                     <p>Nombre</p> <input type="text" id="ingresarNombre" placeholder="ingresa el nombre">
-                    <p>Telefono</p> <input type="tel" id="ingresarTelefono" placeholder="ingresa el número de telefono">
+
+                    <p>Telefono</p> <input type="tel" id="ingresarTelefono" 
+                        pattern="[0-9]{10}" title="solo se permiten números" maxlength="10" 
+                        placeholder="ingresa el número de telefono"
+                    >
+                        
                     <p>Correo</p> <input type="email" id="ingresarCorreo" placeholder="ingresa el correo">
+                    
                     <button id="guardarContacto">
                         Guardar Contacto
                     </button>
