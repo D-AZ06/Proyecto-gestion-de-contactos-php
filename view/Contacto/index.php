@@ -6,7 +6,7 @@
         <title>Gestión de Contactos</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
+        <link rel="stylesheet" href="../styles.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     </head>
     <body>
@@ -14,9 +14,7 @@
 
         <header>
             <h1>Gestión de Contactos <i class="bi bi-clipboard-minus"></i> </h1> 
-        </header>
-
-        <nav>
+            <nav>
             <a href="#contactos" class="btn-navegacion">
                 Lista contactos
                 <i class="bi bi-person"></i>
@@ -27,18 +25,21 @@
                 <i class="bi bi-person-add"></i>
             </a>
         </nav>
+        </header>
 
         <main>
 
             <section id="contactos">
                 <h2>Lista de Contactos</h2>
                 <div class="buscarContacto">
-                    <p>Buscar Contacto</p>
-                    <input type="text" id="buscarNombre" placeholder="Buscar por nombre">
-                    <button id="buscar">
-                        Buscar 
-                        <i class="bi bi-search"></i>
-                    </button>
+                    <p>
+                        Buscar Contacto
+                        <input type="text" id="buscarNombre" placeholder="Buscar por nombre">
+                        <button id="buscar">
+                            Buscar 
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </p>
                 </div>
                 <div>
                     <table>
