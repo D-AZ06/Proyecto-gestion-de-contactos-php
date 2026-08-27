@@ -52,7 +52,7 @@
                 echo json_encode($conctactosObtenidos);
             }
             else{ // si, si hay registros vacios
-                echo json_encode(["mensaje" => "No se encontraron contactos"]);
+                echo json_encode([]);
             }
             
         }
